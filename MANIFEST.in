@@ -1,0 +1,27 @@
+# Include documentation
+include README.md
+include LICENSE
+
+# Include sample data
+include sample_recipes.json
+
+# Include requirements
+include requirements.txt
+
+# Exclude cache and build files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+global-exclude *.so
+global-exclude *.dylib
+
+# Exclude development files
+exclude .gitignore
+exclude .flake8
+exclude pytest.ini
+exclude mypy.ini
+
+# Exclude build directories
+prune build
+prune dist
+prune *.egg-info

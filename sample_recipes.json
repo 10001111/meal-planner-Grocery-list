@@ -1,0 +1,236 @@
+{
+  "recipes": [
+    {
+      "name": "Overnight Oats",
+      "meal_type": "breakfast",
+      "prep_time": 5,
+      "cook_time": 0,
+      "servings": 1,
+      "cuisine": "",
+      "dietary_tags": ["vegetarian"],
+      "ingredients": [
+        {"item": "rolled oats", "quantity": 0.5, "unit": "cup"},
+        {"item": "milk", "quantity": 0.5, "unit": "cup"},
+        {"item": "greek yogurt", "quantity": 0.25, "unit": "cup"},
+        {"item": "honey", "quantity": 1, "unit": "tbsp"},
+        {"item": "chia seeds", "quantity": 1, "unit": "tsp"}
+      ],
+      "instructions": "Combine all ingredients in jar. Refrigerate overnight. Enjoy cold in the morning."
+    },
+    {
+      "name": "Scrambled Eggs",
+      "meal_type": "breakfast",
+      "prep_time": 2,
+      "cook_time": 5,
+      "servings": 2,
+      "cuisine": "",
+      "dietary_tags": ["vegetarian"],
+      "ingredients": [
+        {"item": "eggs", "quantity": 4, "unit": "whole"},
+        {"item": "butter", "quantity": 1, "unit": "tbsp"},
+        {"item": "milk", "quantity": 2, "unit": "tbsp"},
+        {"item": "salt", "quantity": 0.25, "unit": "tsp"},
+        {"item": "black pepper", "quantity": 0.125, "unit": "tsp"}
+      ],
+      "instructions": "Whisk eggs with milk, salt, and pepper. Melt butter in pan over medium-low heat. Pour in eggs and scramble gently until cooked through."
+    },
+    {
+      "name": "Avocado Toast",
+      "meal_type": "breakfast",
+      "prep_time": 5,
+      "cook_time": 2,
+      "servings": 1,
+      "cuisine": "",
+      "dietary_tags": ["vegetarian"],
+      "ingredients": [
+        {"item": "bread", "quantity": 2, "unit": "slice"},
+        {"item": "avocado", "quantity": 1, "unit": "whole"},
+        {"item": "lemon", "quantity": 0.5, "unit": "whole"},
+        {"item": "salt", "quantity": 0.25, "unit": "tsp"},
+        {"item": "black pepper", "quantity": 0.125, "unit": "tsp"},
+        {"item": "red pepper flakes", "quantity": 0.125, "unit": "tsp"}
+      ],
+      "instructions": "Toast bread. Mash avocado with lemon juice, salt, and pepper. Spread on toast and sprinkle with red pepper flakes."
+    },
+    {
+      "name": "Greek Salad",
+      "meal_type": "lunch",
+      "prep_time": 10,
+      "cook_time": 0,
+      "servings": 2,
+      "cuisine": "Mediterranean",
+      "dietary_tags": ["vegetarian"],
+      "ingredients": [
+        {"item": "cucumber", "quantity": 1, "unit": "whole"},
+        {"item": "tomato", "quantity": 2, "unit": "whole"},
+        {"item": "red onion", "quantity": 0.5, "unit": "whole"},
+        {"item": "feta cheese", "quantity": 4, "unit": "oz"},
+        {"item": "kalamata olives", "quantity": 0.25, "unit": "cup"},
+        {"item": "olive oil", "quantity": 2, "unit": "tbsp"},
+        {"item": "lemon", "quantity": 1, "unit": "whole"}
+      ],
+      "instructions": "Chop vegetables into bite-sized pieces. Combine with cheese and olives. Dress with olive oil and fresh lemon juice. Season with salt and oregano."
+    },
+    {
+      "name": "Chicken Caesar Salad",
+      "meal_type": "lunch",
+      "prep_time": 15,
+      "cook_time": 10,
+      "servings": 2,
+      "cuisine": "",
+      "dietary_tags": [],
+      "ingredients": [
+        {"item": "chicken breast", "quantity": 0.5, "unit": "lb"},
+        {"item": "romaine lettuce", "quantity": 1, "unit": "whole"},
+        {"item": "parmesan cheese", "quantity": 0.25, "unit": "cup"},
+        {"item": "caesar dressing", "quantity": 0.25, "unit": "cup"},
+        {"item": "croutons", "quantity": 0.5, "unit": "cup"},
+        {"item": "olive oil", "quantity": 1, "unit": "tbsp"},
+        {"item": "salt", "quantity": 0.25, "unit": "tsp"},
+        {"item": "black pepper", "quantity": 0.125, "unit": "tsp"}
+      ],
+      "instructions": "Season and cook chicken in olive oil until done. Let rest, then slice. Chop lettuce and toss with dressing. Top with chicken, parmesan, and croutons."
+    },
+    {
+      "name": "Turkey Sandwich",
+      "meal_type": "lunch",
+      "prep_time": 5,
+      "cook_time": 0,
+      "servings": 1,
+      "cuisine": "",
+      "dietary_tags": [],
+      "ingredients": [
+        {"item": "bread", "quantity": 2, "unit": "slice"},
+        {"item": "turkey breast", "quantity": 3, "unit": "oz"},
+        {"item": "lettuce", "quantity": 2, "unit": "whole"},
+        {"item": "tomato", "quantity": 2, "unit": "slice"},
+        {"item": "cheese", "quantity": 1, "unit": "slice"},
+        {"item": "mayonnaise", "quantity": 1, "unit": "tbsp"},
+        {"item": "mustard", "quantity": 1, "unit": "tsp"}
+      ],
+      "instructions": "Spread mayo and mustard on bread. Layer turkey, cheese, lettuce, and tomato. Top with second slice of bread."
+    },
+    {
+      "name": "Chicken Stir Fry",
+      "meal_type": "dinner",
+      "prep_time": 15,
+      "cook_time": 15,
+      "servings": 4,
+      "cuisine": "Asian",
+      "dietary_tags": [],
+      "ingredients": [
+        {"item": "chicken breast", "quantity": 1, "unit": "lb", "preparation": "diced"},
+        {"item": "broccoli", "quantity": 2, "unit": "cup", "preparation": "florets"},
+        {"item": "bell pepper", "quantity": 1, "unit": "whole", "preparation": "sliced"},
+        {"item": "soy sauce", "quantity": 3, "unit": "tbsp"},
+        {"item": "garlic", "quantity": 3, "unit": "clove", "preparation": "minced"},
+        {"item": "vegetable oil", "quantity": 2, "unit": "tbsp"},
+        {"item": "rice", "quantity": 2, "unit": "cup"}
+      ],
+      "instructions": "Cook rice according to package. Heat oil in wok over high heat. Add chicken and cook until browned. Add vegetables and stir fry 3-4 minutes. Add soy sauce and garlic, cook 1 minute more. Serve over rice."
+    },
+    {
+      "name": "Pasta Primavera",
+      "meal_type": "dinner",
+      "prep_time": 10,
+      "cook_time": 20,
+      "servings": 4,
+      "cuisine": "Italian",
+      "dietary_tags": ["vegetarian"],
+      "ingredients": [
+        {"item": "penne pasta", "quantity": 1, "unit": "lb"},
+        {"item": "zucchini", "quantity": 1, "unit": "whole", "preparation": "sliced"},
+        {"item": "bell pepper", "quantity": 1, "unit": "whole", "preparation": "diced"},
+        {"item": "cherry tomatoes", "quantity": 1, "unit": "cup", "preparation": "halved"},
+        {"item": "garlic", "quantity": 2, "unit": "clove", "preparation": "minced"},
+        {"item": "olive oil", "quantity": 3, "unit": "tbsp"},
+        {"item": "parmesan cheese", "quantity": 0.5, "unit": "cup"},
+        {"item": "basil", "quantity": 0.25, "unit": "cup", "preparation": "fresh, chopped"}
+      ],
+      "instructions": "Cook pasta according to package. Sauté vegetables in olive oil until tender. Add garlic and cook 1 minute. Toss with drained pasta, parmesan, and basil."
+    },
+    {
+      "name": "Spaghetti Bolognese",
+      "meal_type": "dinner",
+      "prep_time": 10,
+      "cook_time": 30,
+      "servings": 4,
+      "cuisine": "Italian",
+      "dietary_tags": [],
+      "ingredients": [
+        {"item": "spaghetti", "quantity": 1, "unit": "lb"},
+        {"item": "ground beef", "quantity": 1, "unit": "lb"},
+        {"item": "onion", "quantity": 1, "unit": "whole", "preparation": "diced"},
+        {"item": "garlic", "quantity": 3, "unit": "clove", "preparation": "minced"},
+        {"item": "tomato sauce", "quantity": 24, "unit": "oz"},
+        {"item": "tomato paste", "quantity": 2, "unit": "tbsp"},
+        {"item": "olive oil", "quantity": 2, "unit": "tbsp"},
+        {"item": "salt", "quantity": 1, "unit": "tsp"},
+        {"item": "black pepper", "quantity": 0.5, "unit": "tsp"},
+        {"item": "parmesan cheese", "quantity": 0.5, "unit": "cup"}
+      ],
+      "instructions": "Cook spaghetti. Sauté onion in oil until soft. Add beef and cook until browned. Add garlic, tomato sauce, paste, salt, and pepper. Simmer 20 minutes. Serve over pasta with parmesan."
+    },
+    {
+      "name": "Grilled Salmon",
+      "meal_type": "dinner",
+      "prep_time": 5,
+      "cook_time": 12,
+      "servings": 2,
+      "cuisine": "",
+      "dietary_tags": [],
+      "ingredients": [
+        {"item": "salmon fillet", "quantity": 12, "unit": "oz"},
+        {"item": "lemon", "quantity": 1, "unit": "whole"},
+        {"item": "olive oil", "quantity": 2, "unit": "tbsp"},
+        {"item": "garlic", "quantity": 2, "unit": "clove", "preparation": "minced"},
+        {"item": "salt", "quantity": 0.5, "unit": "tsp"},
+        {"item": "black pepper", "quantity": 0.25, "unit": "tsp"},
+        {"item": "dill", "quantity": 1, "unit": "tbsp", "preparation": "fresh, chopped"}
+      ],
+      "instructions": "Brush salmon with olive oil. Season with salt, pepper, and garlic. Grill 6 minutes per side until cooked through. Squeeze lemon over top and sprinkle with dill."
+    },
+    {
+      "name": "Tacos",
+      "meal_type": "dinner",
+      "prep_time": 10,
+      "cook_time": 15,
+      "servings": 4,
+      "cuisine": "Mexican",
+      "dietary_tags": [],
+      "ingredients": [
+        {"item": "ground beef", "quantity": 1, "unit": "lb"},
+        {"item": "taco seasoning", "quantity": 2, "unit": "tbsp"},
+        {"item": "taco shells", "quantity": 8, "unit": "whole"},
+        {"item": "lettuce", "quantity": 2, "unit": "cup", "preparation": "shredded"},
+        {"item": "tomato", "quantity": 1, "unit": "whole", "preparation": "diced"},
+        {"item": "cheddar cheese", "quantity": 1, "unit": "cup", "preparation": "shredded"},
+        {"item": "sour cream", "quantity": 0.5, "unit": "cup"},
+        {"item": "salsa", "quantity": 0.5, "unit": "cup"}
+      ],
+      "instructions": "Brown ground beef in pan. Add taco seasoning and water, simmer until thickened. Warm taco shells. Fill with meat and toppings."
+    },
+    {
+      "name": "Vegetable Curry",
+      "meal_type": "dinner",
+      "prep_time": 15,
+      "cook_time": 25,
+      "servings": 4,
+      "cuisine": "Indian",
+      "dietary_tags": ["vegetarian", "vegan"],
+      "ingredients": [
+        {"item": "onion", "quantity": 1, "unit": "whole", "preparation": "diced"},
+        {"item": "garlic", "quantity": 3, "unit": "clove", "preparation": "minced"},
+        {"item": "ginger", "quantity": 1, "unit": "tbsp", "preparation": "minced"},
+        {"item": "curry powder", "quantity": 2, "unit": "tbsp"},
+        {"item": "coconut milk", "quantity": 14, "unit": "oz"},
+        {"item": "cauliflower", "quantity": 2, "unit": "cup", "preparation": "florets"},
+        {"item": "potato", "quantity": 2, "unit": "whole", "preparation": "cubed"},
+        {"item": "carrot", "quantity": 2, "unit": "whole", "preparation": "sliced"},
+        {"item": "vegetable oil", "quantity": 2, "unit": "tbsp"},
+        {"item": "rice", "quantity": 2, "unit": "cup"}
+      ],
+      "instructions": "Cook rice. Sauté onion in oil until soft. Add garlic, ginger, and curry powder, cook 1 minute. Add vegetables and coconut milk. Simmer 20 minutes until vegetables are tender. Serve over rice."
+    }
+  ]
+}
