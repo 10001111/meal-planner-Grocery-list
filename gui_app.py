@@ -45,7 +45,7 @@ class MealPlannerGUI:
 
     def __init__(self, root):
         self.root = root
-        self.root.title("👨‍🍳 Meal Planner & Grocery List Generator")
+        self.root.title("👨‍🍳 Meal Planner & Grocery List Planner")
         self.root.geometry("950x700")
 
         # Try to set cooking icon if available
