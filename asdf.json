@@ -1,0 +1,429 @@
+{
+  "recipes": [
+    {
+      "name": "Baked Chicken with Vegetables",
+      "meal_type": "dinner",
+      "prep_time": 15,
+      "cook_time": 40,
+      "servings": 4,
+      "cuisine": "American",
+      "dietary_tags": [],
+      "ingredients": [
+        {
+          "item": "chicken thighs",
+          "quantity": 2.0,
+          "unit": "lbs",
+          "preparation": ""
+        },
+        {
+          "item": "potatoes",
+          "quantity": 1.0,
+          "unit": "lb",
+          "preparation": "cubed"
+        },
+        {
+          "item": "carrots",
+          "quantity": 3.0,
+          "unit": "whole",
+          "preparation": "sliced"
+        },
+        {
+          "item": "onion",
+          "quantity": 1.0,
+          "unit": "whole",
+          "preparation": "quartered"
+        },
+        {
+          "item": "olive oil",
+          "quantity": 3.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "garlic powder",
+          "quantity": 1.0,
+          "unit": "tsp",
+          "preparation": ""
+        },
+        {
+          "item": "paprika",
+          "quantity": 1.0,
+          "unit": "tsp",
+          "preparation": ""
+        },
+        {
+          "item": "salt",
+          "quantity": 1.0,
+          "unit": "tsp",
+          "preparation": ""
+        },
+        {
+          "item": "black pepper",
+          "quantity": 0.5,
+          "unit": "tsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Preheat oven to 425\u00b0F (220\u00b0C).\n2. Arrange vegetables in large baking dish.\n3. Drizzle with 2 tbsp olive oil and season with salt and pepper.\n4. Place chicken on top of vegetables.\n5. Rub chicken with remaining oil and season with garlic powder, paprika, salt, and pepper.\n6. Bake for 35-40 minutes until chicken reaches 165\u00b0F internal temperature."
+    },
+    {
+      "name": "Chicken Caesar Salad",
+      "meal_type": "lunch",
+      "prep_time": 15,
+      "cook_time": 15,
+      "servings": 2,
+      "cuisine": "American",
+      "dietary_tags": [],
+      "ingredients": [
+        {
+          "item": "chicken breast",
+          "quantity": 1.0,
+          "unit": "lb",
+          "preparation": ""
+        },
+        {
+          "item": "romaine lettuce",
+          "quantity": 1.0,
+          "unit": "head",
+          "preparation": "chopped"
+        },
+        {
+          "item": "parmesan cheese",
+          "quantity": 0.5,
+          "unit": "cup",
+          "preparation": "grated"
+        },
+        {
+          "item": "caesar dressing",
+          "quantity": 0.5,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "croutons",
+          "quantity": 1.0,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "olive oil",
+          "quantity": 1.0,
+          "unit": "tbsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Season chicken with salt and pepper.\n2. Heat olive oil in pan and cook chicken 6-7 minutes per side.\n3. Let chicken rest 5 minutes, then slice.\n4. Toss lettuce with dressing and parmesan.\n5. Top with sliced chicken and croutons."
+    },
+    {
+      "name": "Fruit Smoothie",
+      "meal_type": "snack",
+      "prep_time": 5,
+      "cook_time": 0,
+      "servings": 2,
+      "cuisine": "American",
+      "dietary_tags": [
+        "vegetarian"
+      ],
+      "ingredients": [
+        {
+          "item": "banana",
+          "quantity": 1.0,
+          "unit": "whole",
+          "preparation": ""
+        },
+        {
+          "item": "strawberries",
+          "quantity": 1.0,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "yogurt",
+          "quantity": 1.0,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "milk",
+          "quantity": 0.5,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "honey",
+          "quantity": 1.0,
+          "unit": "tbsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Add all ingredients to blender.\n2. Blend until smooth.\n3. Pour into glasses and serve immediately."
+    },
+    {
+      "name": "Grilled Cheese Sandwich",
+      "meal_type": "lunch",
+      "prep_time": 5,
+      "cook_time": 10,
+      "servings": 2,
+      "cuisine": "American",
+      "dietary_tags": [
+        "vegetarian"
+      ],
+      "ingredients": [
+        {
+          "item": "bread",
+          "quantity": 4.0,
+          "unit": "slices",
+          "preparation": ""
+        },
+        {
+          "item": "cheddar cheese",
+          "quantity": 4.0,
+          "unit": "slices",
+          "preparation": ""
+        },
+        {
+          "item": "butter",
+          "quantity": 2.0,
+          "unit": "tbsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Butter one side of each bread slice.\n2. Place cheese between bread slices, butter side out.\n3. Heat skillet over medium heat.\n4. Cook sandwich until golden brown on each side and cheese is melted, about 3-4 minutes per side."
+    },
+    {
+      "name": "Hummus with Veggies",
+      "meal_type": "snack",
+      "prep_time": 10,
+      "cook_time": 0,
+      "servings": 4,
+      "cuisine": "Mediterranean",
+      "dietary_tags": [
+        "vegan",
+        "vegetarian"
+      ],
+      "ingredients": [
+        {
+          "item": "chickpeas",
+          "quantity": 15.0,
+          "unit": "oz",
+          "preparation": "drained"
+        },
+        {
+          "item": "tahini",
+          "quantity": 0.25,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "lemon juice",
+          "quantity": 3.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "garlic",
+          "quantity": 2.0,
+          "unit": "cloves",
+          "preparation": ""
+        },
+        {
+          "item": "olive oil",
+          "quantity": 2.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "carrots",
+          "quantity": 2.0,
+          "unit": "whole",
+          "preparation": "cut into sticks"
+        },
+        {
+          "item": "celery",
+          "quantity": 3.0,
+          "unit": "stalks",
+          "preparation": "cut into sticks"
+        }
+      ],
+      "instructions": "1. In food processor, combine chickpeas, tahini, lemon juice, garlic, and olive oil.\n2. Blend until smooth, adding water if needed.\n3. Transfer to serving bowl.\n4. Serve with carrot and celery sticks."
+    },
+    {
+      "name": "Oatmeal with Berries",
+      "meal_type": "breakfast",
+      "prep_time": 5,
+      "cook_time": 10,
+      "servings": 2,
+      "cuisine": "American",
+      "dietary_tags": [
+        "vegan",
+        "vegetarian"
+      ],
+      "ingredients": [
+        {
+          "item": "rolled oats",
+          "quantity": 1.0,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "water",
+          "quantity": 2.0,
+          "unit": "cups",
+          "preparation": ""
+        },
+        {
+          "item": "blueberries",
+          "quantity": 0.5,
+          "unit": "cup",
+          "preparation": ""
+        },
+        {
+          "item": "strawberries",
+          "quantity": 0.5,
+          "unit": "cup",
+          "preparation": "sliced"
+        },
+        {
+          "item": "honey",
+          "quantity": 2.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "cinnamon",
+          "quantity": 0.5,
+          "unit": "tsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Bring water to boil in a pot.\n2. Add oats and reduce heat to medium.\n3. Cook for 5-7 minutes, stirring occasionally.\n4. Remove from heat and stir in cinnamon.\n5. Top with berries and drizzle with honey."
+    },
+    {
+      "name": "Scrambled Eggs with Toast",
+      "meal_type": "breakfast",
+      "prep_time": 5,
+      "cook_time": 10,
+      "servings": 2,
+      "cuisine": "American",
+      "dietary_tags": [
+        "vegetarian"
+      ],
+      "ingredients": [
+        {
+          "item": "eggs",
+          "quantity": 4.0,
+          "unit": "whole",
+          "preparation": ""
+        },
+        {
+          "item": "butter",
+          "quantity": 1.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "bread",
+          "quantity": 4.0,
+          "unit": "slices",
+          "preparation": ""
+        },
+        {
+          "item": "milk",
+          "quantity": 2.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "salt",
+          "quantity": 0.25,
+          "unit": "tsp",
+          "preparation": ""
+        },
+        {
+          "item": "black pepper",
+          "quantity": 0.125,
+          "unit": "tsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Beat eggs with milk, salt, and pepper.\n2. Melt butter in pan over medium heat.\n3. Pour in eggs and gently stir until cooked.\n4. Toast bread and serve with eggs."
+    },
+    {
+      "name": "Spaghetti with Marinara",
+      "meal_type": "dinner",
+      "prep_time": 10,
+      "cook_time": 25,
+      "servings": 4,
+      "cuisine": "Italian",
+      "dietary_tags": [
+        "vegan",
+        "vegetarian"
+      ],
+      "ingredients": [
+        {
+          "item": "spaghetti",
+          "quantity": 1.0,
+          "unit": "lb",
+          "preparation": ""
+        },
+        {
+          "item": "crushed tomatoes",
+          "quantity": 28.0,
+          "unit": "oz",
+          "preparation": ""
+        },
+        {
+          "item": "garlic",
+          "quantity": 4.0,
+          "unit": "cloves",
+          "preparation": "minced"
+        },
+        {
+          "item": "olive oil",
+          "quantity": 3.0,
+          "unit": "tbsp",
+          "preparation": ""
+        },
+        {
+          "item": "basil",
+          "quantity": 0.25,
+          "unit": "cup",
+          "preparation": "fresh, chopped"
+        },
+        {
+          "item": "salt",
+          "quantity": 1.0,
+          "unit": "tsp",
+          "preparation": ""
+        },
+        {
+          "item": "black pepper",
+          "quantity": 0.5,
+          "unit": "tsp",
+          "preparation": ""
+        }
+      ],
+      "instructions": "1. Cook spaghetti according to package directions.\n2. Heat olive oil in large pan over medium heat.\n3. Add garlic and cook until fragrant, about 1 minute.\n4. Add crushed tomatoes, salt, pepper, and half the basil.\n5. Simmer for 15 minutes.\n6. Toss pasta with sauce and garnish with remaining basil."
+    },
+    {
+      "name": "dadfasd",
+      "meal_type": "snack",
+      "prep_time": 12,
+      "cook_time": 3,
+      "servings": 123,
+      "cuisine": "asdf",
+      "dietary_tags": [
+        "adf"
+      ],
+      "ingredients": [
+        {
+          "item": "assdsdf",
+          "quantity": 1.0,
+          "unit": "whole",
+          "preparation": ""
+        }
+      ],
+      "instructions": "adfsad"
+    }
+  ]
+}

@@ -10,9 +10,9 @@ from pathlib import Path
 from models import Recipe, RecipeIngredient, PantryItem
 from database import initialize_database
 from recipe_manager import (
-    add_recipe, get_recipe, get_all_recipes, delete_recipe,
-    import_recipes_from_json, export_recipes_to_json
+    add_recipe, get_recipe, get_all_recipes, delete_recipe
 )
+from pdf_exporter import export_recipes_to_pdf
 from meal_planner import (
     generate_meal_plan, get_current_plan, save_meal_plan,
     swap_meal, get_swap_suggestions, clear_meal_plan
@@ -28,33 +28,42 @@ from utils import parse_ingredient_string, format_quantity, get_ingredient_categ
 class MealPlannerGUI:
     """Main GUI application class."""
 
-    # Dark theme color palette
+    # Cream theme color palette
     COLORS = {
-        'bg_dark': '#1a1a1a',        # Very dark gray (almost black)
-        'bg_medium': '#2d2d2d',      # Medium dark gray
-        'bg_light': '#3d3d3d',       # Lighter dark gray
-        'fg_primary': "#242222",     # Light gray text
-        'fg_secondary': "#292727",   # Dimmer gray text
-        'accent': '#4a4a4a',         # Accent gray
-        'button': '#4a4a4a',         # Button background (pure gray)
-        'button_hover': "#352929",   # Button hover (lighter gray)
-        'button_active': "#231b1b",  # Button active/pressed (darker gray)
-        'selected': '#505050',       # Selection color
-        'border': '#555555',         # Border color
+        'bg_dark': '#FFF8E7',        # Light cream background
+        'bg_medium': "#F5ECD7",      # Medium cream
+        'bg_light': "#FEFBF3",       # Lighter cream
+        'fg_primary': "#3E3022",     # Dark brown text
+        'fg_secondary': "#6B5D4F",   # Medium brown text
+        'accent': "#D4C4A8",         # Accent tan
+        'button': "#E8DCC8",         # Button background (cream)
+        'button_hover': "#D4C4A8",   # Button hover (darker tan)
+        'button_active': "#C9B697",  # Button active/pressed (darker tan)
+        'selected': "#D4C4A8",       # Selection color (tan)
+        'border': "#C9B697",         # Border color (tan)
     }
 
     def __init__(self, root):
         self.root = root
-        self.root.title("Meal Planner & Grocery List Generator")
-        self.root.geometry("1000x700")
+        self.root.title("👨‍🍳 Meal Planner & Grocery List Generator")
+        self.root.geometry("950x700")
 
-        # Apply dark theme to root window
+        # Try to set cooking icon if available
+        try:
+            import os
+            icon_path = os.path.join(os.path.dirname(__file__), 'cooking.ico')
+            if os.path.exists(icon_path):
+                self.root.iconbitmap(default=icon_path)
+        except:
+            pass  # Icon file not found or not supported, will use default
+
+        # Apply cream theme to root window
         self.root.configure(bg=self.COLORS['bg_dark'])
 
         # Initialize database
         initialize_database()
 
-        # Configure dark theme styles
+        # Configure cream theme styles
         self.configure_dark_theme()
 
         # Create notebook (tabbed interface)
@@ -66,6 +75,7 @@ class MealPlannerGUI:
         self.create_meal_plan_tab()
         self.create_grocery_tab()
         self.create_pantry_tab()
+        self.create_help_tab()
 
         # Status bar
         self.status_bar = tk.Label(
@@ -80,7 +90,7 @@ class MealPlannerGUI:
         self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
 
     def configure_dark_theme(self):
-        """Configure ttk styles for dark theme."""
+        """Configure ttk styles for cream theme."""
         style = ttk.Style()
 
         # Configure Notebook (tabs)
@@ -172,13 +182,13 @@ class MealPlannerGUI:
         left_frame = ttk.Frame(tab)
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
 
-        ttk.Label(left_frame, text="Your Recipes", font=('Arial', 12, 'bold')).pack(pady=5)
+        ttk.Label(left_frame, text="📖 Your Recipe Collection", font=('Arial', 14, 'bold')).pack(pady=10)
 
         # Filter frame
         filter_frame = ttk.Frame(left_frame)
-        filter_frame.pack(fill=tk.X, pady=5)
+        filter_frame.pack(fill=tk.X, pady=8)
 
-        ttk.Label(filter_frame, text="Filter:").pack(side=tk.LEFT)
+        ttk.Label(filter_frame, text="Filter by Meal Type:", font=('Arial', 10)).pack(side=tk.LEFT, padx=5)
         self.recipe_filter = ttk.Combobox(filter_frame, values=["All", "breakfast", "lunch", "dinner", "snack"], state='readonly')
         self.recipe_filter.set("All")
         self.recipe_filter.pack(side=tk.LEFT, padx=5)
@@ -194,7 +204,7 @@ class MealPlannerGUI:
         self.recipe_listbox = tk.Listbox(
             list_frame,
             yscrollcommand=scrollbar.set,
-            font=('Arial', 10),
+            font=('Arial', 11),
             bg=self.COLORS['bg_medium'],
             fg=self.COLORS['fg_primary'],
             selectbackground=self.COLORS['selected'],
@@ -211,24 +221,24 @@ class MealPlannerGUI:
 
         # Buttons
         btn_frame = ttk.Frame(left_frame)
-        btn_frame.pack(fill=tk.X, pady=5)
+        btn_frame.pack(fill=tk.X, pady=10)
 
-        ttk.Button(btn_frame, text="Add Recipe", command=self.add_recipe_dialog).pack(side=tk.LEFT, padx=2)
-        ttk.Button(btn_frame, text="Delete", command=self.delete_recipe).pack(side=tk.LEFT, padx=2)
-        ttk.Button(btn_frame, text="Import JSON", command=self.import_recipes).pack(side=tk.LEFT, padx=2)
-        ttk.Button(btn_frame, text="Export JSON", command=self.export_recipes).pack(side=tk.LEFT, padx=2)
+        ttk.Button(btn_frame, text="➕ Add New Recipe", command=self.add_recipe_dialog).pack(side=tk.LEFT, padx=3)
+        ttk.Button(btn_frame, text="🗑 Delete Recipe", command=self.delete_recipe).pack(side=tk.LEFT, padx=3)
+        ttk.Button(btn_frame, text="📄 Export to PDF", command=self.export_recipes_pdf).pack(side=tk.LEFT, padx=3)
 
         # Right panel - Recipe details
         right_frame = ttk.Frame(tab)
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5, pady=5)
 
-        ttk.Label(right_frame, text="Recipe Details", font=('Arial', 12, 'bold')).pack(pady=5)
+        ttk.Label(right_frame, text="📄 Recipe Details", font=('Arial', 14, 'bold')).pack(pady=10)
 
         self.recipe_details = scrolledtext.ScrolledText(
             right_frame,
             wrap=tk.WORD,
             width=50,
             height=30,
+            font=('Arial', 11),
             bg=self.COLORS['bg_medium'],
             fg=self.COLORS['fg_primary'],
             insertbackground=self.COLORS['fg_primary'],
@@ -517,34 +527,34 @@ class MealPlannerGUI:
             else:
                 messagebox.showerror("Error", "Failed to delete recipe")
 
-    def import_recipes(self):
-        """Import recipes from JSON file."""
-        filename = filedialog.askopenfilename(
-            title="Select JSON file",
-            filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
-        )
+    def export_recipes_pdf(self):
+        """Export recipes to PDF file."""
+        # Get current filter
+        filter_val = self.recipe_filter.get()
+        meal_type = None if filter_val == "All" else filter_val
 
-        if filename:
-            try:
-                results = import_recipes_from_json(filename)
-                msg = f"Success: {results['success']}\nSkipped: {results['skipped']}\nFailed: {results['failed']}"
-                messagebox.showinfo("Import Results", msg)
-                self.refresh_recipes()
-            except Exception as e:
-                messagebox.showerror("Error", f"Import failed: {e}")
+        # Get recipes to export
+        recipes = get_all_recipes(meal_type=meal_type)
 
-    def export_recipes(self):
-        """Export recipes to JSON file."""
+        if not recipes:
+            messagebox.showwarning("Warning", "No recipes to export")
+            return
+
+        # Ask for save location
         filename = filedialog.asksaveasfilename(
-            title="Save recipes as",
-            defaultextension=".json",
-            filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
+            title="Save recipes as PDF",
+            defaultextension=".pdf",
+            filetypes=[("PDF files", "*.pdf"), ("All files", "*.*")]
         )
 
         if filename:
             try:
-                count = export_recipes_to_json(filename)
-                messagebox.showinfo("Success", f"Exported {count} recipes to {filename}")
+                export_recipes_to_pdf(recipes, filename)
+                messagebox.showinfo("Success", f"Exported {len(recipes)} recipes to PDF:\n{filename}")
+            except ImportError as e:
+                messagebox.showerror("Error",
+                    "PDF export requires the 'reportlab' library.\n\n"
+                    "Please install it with:\npip install reportlab")
             except Exception as e:
                 messagebox.showerror("Error", f"Export failed: {e}")
 
@@ -557,14 +567,14 @@ class MealPlannerGUI:
 
         # Top controls
         control_frame = ttk.Frame(tab)
-        control_frame.pack(fill=tk.X, padx=10, pady=10)
+        control_frame.pack(fill=tk.X, padx=15, pady=15)
 
-        ttk.Label(control_frame, text="Days:").pack(side=tk.LEFT, padx=5)
+        ttk.Label(control_frame, text="📅 Number of Days:", font=('Arial', 10, 'bold')).pack(side=tk.LEFT, padx=8)
         self.days_spin = ttk.Spinbox(control_frame, from_=1, to=14, width=5)
         self.days_spin.set(7)
         self.days_spin.pack(side=tk.LEFT, padx=5)
 
-        ttk.Label(control_frame, text="Servings:").pack(side=tk.LEFT, padx=5)
+        ttk.Label(control_frame, text="🍽 Servings per Meal:", font=('Arial', 10, 'bold')).pack(side=tk.LEFT, padx=8)
         self.servings_spin = ttk.Spinbox(control_frame, from_=1, to=10, width=5)
         self.servings_spin.set(2)
         self.servings_spin.pack(side=tk.LEFT, padx=5)
@@ -573,12 +583,13 @@ class MealPlannerGUI:
         self.lunch_var = tk.BooleanVar(value=True)
         self.dinner_var = tk.BooleanVar(value=True)
 
-        ttk.Checkbutton(control_frame, text="Breakfast", variable=self.breakfast_var).pack(side=tk.LEFT, padx=5)
-        ttk.Checkbutton(control_frame, text="Lunch", variable=self.lunch_var).pack(side=tk.LEFT, padx=5)
-        ttk.Checkbutton(control_frame, text="Dinner", variable=self.dinner_var).pack(side=tk.LEFT, padx=5)
+        ttk.Label(control_frame, text="Include:", font=('Arial', 10, 'bold')).pack(side=tk.LEFT, padx=8)
+        ttk.Checkbutton(control_frame, text="🍳 Breakfast", variable=self.breakfast_var).pack(side=tk.LEFT, padx=5)
+        ttk.Checkbutton(control_frame, text="🥗 Lunch", variable=self.lunch_var).pack(side=tk.LEFT, padx=5)
+        ttk.Checkbutton(control_frame, text="🍽 Dinner", variable=self.dinner_var).pack(side=tk.LEFT, padx=5)
 
-        ttk.Button(control_frame, text="Generate Plan", command=self.generate_plan).pack(side=tk.LEFT, padx=10)
-        ttk.Button(control_frame, text="Clear Plan", command=self.clear_plan).pack(side=tk.LEFT, padx=5)
+        ttk.Button(control_frame, text="✨ Generate Meal Plan", command=self.generate_plan).pack(side=tk.LEFT, padx=15)
+        ttk.Button(control_frame, text="🗑 Clear Plan", command=self.clear_plan).pack(side=tk.LEFT, padx=5)
 
         # Meal plan display
         plan_frame = ttk.Frame(tab)
@@ -589,6 +600,7 @@ class MealPlannerGUI:
             wrap=tk.WORD,
             width=80,
             height=25,
+            font=('Arial', 11),
             bg=self.COLORS['bg_medium'],
             fg=self.COLORS['fg_primary'],
             insertbackground=self.COLORS['fg_primary'],
@@ -686,16 +698,19 @@ class MealPlannerGUI:
 
         # Controls
         control_frame = ttk.Frame(tab)
-        control_frame.pack(fill=tk.X, padx=10, pady=10)
+        control_frame.pack(fill=tk.X, padx=15, pady=15)
 
         self.deduct_pantry_var = tk.BooleanVar(value=True)
-        ttk.Checkbutton(control_frame, text="Deduct pantry items",
-                       variable=self.deduct_pantry_var).pack(side=tk.LEFT, padx=5)
+        ttk.Checkbutton(control_frame, text="✓ Deduct items already in pantry",
+                       variable=self.deduct_pantry_var).pack(side=tk.LEFT, padx=8)
 
-        ttk.Button(control_frame, text="Generate List", command=self.generate_grocery_list).pack(side=tk.LEFT, padx=10)
-        ttk.Button(control_frame, text="Export TXT", command=lambda: self.export_grocery('txt')).pack(side=tk.LEFT, padx=5)
-        ttk.Button(control_frame, text="Export Markdown", command=lambda: self.export_grocery('md')).pack(side=tk.LEFT, padx=5)
-        ttk.Button(control_frame, text="Export JSON", command=lambda: self.export_grocery('json')).pack(side=tk.LEFT, padx=5)
+        ttk.Button(control_frame, text="🛒 Generate Shopping List", command=self.generate_grocery_list).pack(side=tk.LEFT, padx=15)
+
+        # Export section
+        ttk.Label(control_frame, text="Export as:", font=('Arial', 9, 'bold')).pack(side=tk.LEFT, padx=8)
+        ttk.Button(control_frame, text="📄 Text", command=lambda: self.export_grocery('txt')).pack(side=tk.LEFT, padx=2)
+        ttk.Button(control_frame, text="📝 Markdown", command=lambda: self.export_grocery('md')).pack(side=tk.LEFT, padx=2)
+        ttk.Button(control_frame, text="📋 JSON", command=lambda: self.export_grocery('json')).pack(side=tk.LEFT, padx=2)
 
         # Grocery list display
         list_frame = ttk.Frame(tab)
@@ -706,6 +721,7 @@ class MealPlannerGUI:
             wrap=tk.WORD,
             width=80,
             height=25,
+            font=('Arial', 11),
             bg=self.COLORS['bg_medium'],
             fg=self.COLORS['fg_primary'],
             insertbackground=self.COLORS['fg_primary'],
@@ -795,32 +811,32 @@ class MealPlannerGUI:
         self.notebook.add(tab, text="Pantry")
 
         # Left panel - Add/Update
-        left_frame = ttk.LabelFrame(tab, text="Add/Update Item")
+        left_frame = ttk.LabelFrame(tab, text="➕ Add or Update Item", padding=10)
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        ttk.Label(left_frame, text="Ingredient:").grid(row=0, column=0, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(left_frame, text="Ingredient Name:", font=('Arial', 10)).grid(row=0, column=0, sticky=tk.W, padx=5, pady=8)
         self.pantry_ingredient = ttk.Entry(left_frame, width=30)
         self.pantry_ingredient.grid(row=0, column=1, padx=5, pady=5)
 
-        ttk.Label(left_frame, text="Quantity:").grid(row=1, column=0, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(left_frame, text="Quantity:", font=('Arial', 10)).grid(row=1, column=0, sticky=tk.W, padx=5, pady=8)
         self.pantry_quantity = ttk.Entry(left_frame, width=15)
         self.pantry_quantity.grid(row=1, column=1, sticky=tk.W, padx=5, pady=5)
 
-        ttk.Label(left_frame, text="Unit:").grid(row=2, column=0, sticky=tk.W, padx=5, pady=5)
+        ttk.Label(left_frame, text="Unit (e.g., cups, lbs):", font=('Arial', 10)).grid(row=2, column=0, sticky=tk.W, padx=5, pady=8)
         self.pantry_unit = ttk.Entry(left_frame, width=15)
         self.pantry_unit.grid(row=2, column=1, sticky=tk.W, padx=5, pady=5)
 
         btn_frame = ttk.Frame(left_frame)
-        btn_frame.grid(row=3, column=0, columnspan=2, pady=10)
+        btn_frame.grid(row=3, column=0, columnspan=2, pady=15)
 
-        ttk.Button(btn_frame, text="Add Item", command=self.add_pantry).pack(side=tk.LEFT, padx=5)
-        ttk.Button(btn_frame, text="Update", command=self.update_pantry).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="➕ Add to Pantry", command=self.add_pantry).pack(side=tk.LEFT, padx=5)
+        ttk.Button(btn_frame, text="🔄 Update Quantity", command=self.update_pantry).pack(side=tk.LEFT, padx=5)
 
         # Right panel - Pantry list
         right_frame = ttk.Frame(tab)
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
-        ttk.Label(right_frame, text="Pantry Inventory", font=('Arial', 12, 'bold')).pack(pady=5)
+        ttk.Label(right_frame, text="🏺 Your Pantry Inventory", font=('Arial', 14, 'bold')).pack(pady=10)
 
         list_frame = ttk.Frame(right_frame)
         list_frame.pack(fill=tk.BOTH, expand=True)
@@ -831,7 +847,7 @@ class MealPlannerGUI:
         self.pantry_listbox = tk.Listbox(
             list_frame,
             yscrollcommand=scrollbar.set,
-            font=('Arial', 10),
+            font=('Arial', 11),
             width=50,
             bg=self.COLORS['bg_medium'],
             fg=self.COLORS['fg_primary'],
@@ -845,8 +861,8 @@ class MealPlannerGUI:
         self.pantry_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.config(command=self.pantry_listbox.yview)
 
-        ttk.Button(right_frame, text="Remove Selected", command=self.remove_pantry).pack(pady=5)
-        ttk.Button(right_frame, text="Refresh", command=self.refresh_pantry).pack(pady=5)
+        ttk.Button(right_frame, text="🗑 Remove Selected Item", command=self.remove_pantry).pack(pady=5)
+        ttk.Button(right_frame, text="🔄 Refresh List", command=self.refresh_pantry).pack(pady=5)
 
         self.refresh_pantry()
 
@@ -952,6 +968,276 @@ class MealPlannerGUI:
             for item in sorted(by_category[category], key=lambda x: x.ingredient_name):
                 qty = format_quantity(item.quantity)
                 self.pantry_listbox.insert(tk.END, f"  {item.ingredient_name}: {qty} {item.unit}")
+
+    # ==================== Help & Info Tab ====================
+
+    def create_help_tab(self):
+        """Create the help and information tab."""
+        tab = ttk.Frame(self.notebook)
+        self.notebook.add(tab, text="ℹ️ Help & Info")
+
+        # Content
+        content = scrolledtext.ScrolledText(
+            tab,
+            wrap=tk.WORD,
+            font=('Arial', 11),
+            bg=self.COLORS['bg_medium'],
+            fg=self.COLORS['fg_primary'],
+            padx=20,
+            pady=20,
+            borderwidth=0,
+            highlightthickness=1,
+            highlightbackground=self.COLORS['border']
+        )
+        content.pack(fill=tk.BOTH, expand=True, padx=15, pady=15)
+
+        # Help text content
+        help_text = """👨‍🍳 MEAL PLANNER & GROCERY LIST GENERATOR - USER GUIDE
+
+═══════════════════════════════════════════════════════════════════════
+
+📖 WHAT THIS APP DOES
+
+This application helps you:
+  ✓ Store and organize your favorite recipes
+  ✓ Generate weekly meal plans automatically
+  ✓ Create shopping lists based on your meal plan
+  ✓ Track your pantry inventory
+  ✓ Export recipes to PDF for easy sharing and printing
+  ✓ Organize recipes by meal type (breakfast, lunch, dinner, snack)
+  ✓ Filter recipes by dietary preferences
+
+
+═══════════════════════════════════════════════════════════════════════
+
+📚 RECIPES TAB - How to Use
+
+ADD NEW RECIPES:
+  1. Click "➕ Add New Recipe" button
+  2. Fill in recipe details (name, meal type, servings, etc.)
+  3. Add ingredients one per line (e.g., "2 cups flour" or "1 lb chicken, diced")
+  4. Add cooking instructions
+  5. Click "Save Recipe"
+
+VIEW RECIPE DETAILS:
+  • Click on any recipe in the list to see full details
+  • Use the filter dropdown to show only specific meal types
+
+DELETE RECIPES:
+  1. Select a recipe from the list
+  2. Click "🗑 Delete Recipe"
+  3. Confirm deletion
+
+EXPORT RECIPES TO PDF:
+  • Click "📄 Export to PDF" to save recipes as a PDF file
+  • The export will include all recipes shown in the current filter
+  • PDFs are perfect for printing or sharing with friends!
+
+
+═══════════════════════════════════════════════════════════════════════
+
+📅 MEAL PLAN TAB - How to Use
+
+GENERATE A MEAL PLAN:
+  1. Set the number of days (1-14 days)
+  2. Set servings per meal
+  3. Check which meals to include (Breakfast, Lunch, Dinner)
+  4. Click "✨ Generate Meal Plan"
+
+The app will:
+  • Randomly select recipes from your collection
+  • Create a balanced meal plan with variety
+  • Show total cooking time for each meal
+  • Display all meals organized by day
+
+CLEAR MEAL PLAN:
+  • Click "🗑 Clear Plan" to start over
+
+
+═══════════════════════════════════════════════════════════════════════
+
+🛒 GROCERY LIST TAB - How to Use
+
+GENERATE SHOPPING LIST:
+  1. First, create a meal plan in the Meal Plan tab
+  2. Go to Grocery List tab
+  3. Check "✓ Deduct items already in pantry" if you want to subtract pantry items
+  4. Click "🛒 Generate Shopping List"
+
+The app will:
+  • Combine all ingredients from your meal plan
+  • Group items by category (Produce, Dairy, Meat, etc.)
+  • Show quantities needed for each item
+  • Subtract items you already have in your pantry (if checked)
+
+EXPORT GROCERY LIST:
+  • 📄 Text - Plain text file for printing
+  • 📝 Markdown - Formatted markdown file
+  • 📋 JSON - Structured data file
+
+
+═══════════════════════════════════════════════════════════════════════
+
+🏺 PANTRY TAB - How to Use
+
+ADD ITEMS TO PANTRY:
+  1. Enter ingredient name
+  2. Enter quantity
+  3. Enter unit (cups, lbs, oz, etc.)
+  4. Click "➕ Add to Pantry"
+
+UPDATE QUANTITIES:
+  • Use the same form to update existing items
+  • Click "🔄 Update Quantity"
+
+REMOVE ITEMS:
+  1. Select an item from the list
+  2. Click "🗑 Remove Selected Item"
+
+WHY USE PANTRY?
+  • Track what you already have
+  • Avoid buying duplicate items
+  • Reduce food waste
+  • Save money on groceries
+
+
+═══════════════════════════════════════════════════════════════════════
+
+✅ WHAT THIS APP HAS
+
+  ✓ 8 Pre-loaded everyday recipes (breakfast, lunch, dinner, snacks)
+  ✓ Beautiful cream-themed interface
+  ✓ Recipe management (add, view, delete, export)
+  ✓ Automatic meal planning for up to 14 days
+  ✓ Smart grocery list generation
+  ✓ Pantry inventory tracking
+  ✓ PDF export for recipes
+  ✓ Multiple export formats for grocery lists
+  ✓ Recipe filtering by meal type
+  ✓ Dietary tags support (vegetarian, vegan, etc.)
+  ✓ Ingredient categorization
+  ✓ Local database storage (all data saved on your computer)
+
+
+═══════════════════════════════════════════════════════════════════════
+
+❌ WHAT THIS APP DOES NOT HAVE
+
+  ✗ Internet/cloud sync - All data is stored locally on your computer
+  ✗ Recipe sharing between users - PDF export only
+  ✗ Nutrition calculations - No calorie or macro tracking
+  ✗ Recipe import from websites - Manual entry only
+  ✗ Mobile app - Desktop application only
+  ✗ Barcode scanning for pantry items
+  ✗ Price tracking or budget features
+  ✗ Integration with online grocery stores
+  ✗ Recipe rating or reviews
+  ✗ Cooking timers or reminders
+  ✗ Photo uploads for recipes
+  ✗ Meal prep scheduling
+  ✗ PDF import for recipes (PDF export only)
+
+
+═══════════════════════════════════════════════════════════════════════
+
+💡 TIPS & BEST PRACTICES
+
+RECIPE TIPS:
+  • Be specific with ingredient quantities and units
+  • Include preparation notes (e.g., "diced", "chopped", "sliced")
+  • Write clear, numbered instructions
+  • Add dietary tags to make filtering easier
+
+MEAL PLANNING TIPS:
+  • Start with 7 days for a weekly plan
+  • Add more recipes to get more variety in meal plans
+  • Adjust servings based on household size
+  • Review your pantry before generating grocery lists
+
+PANTRY TIPS:
+  • Keep pantry updated for accurate grocery lists
+  • Use consistent units (don't mix cups and ounces for same item)
+  • Remove expired items regularly
+  • Add common staples (flour, sugar, oil, etc.)
+
+GROCERY LIST TIPS:
+  • Always generate a new list after changing your meal plan
+  • Check pantry items before shopping
+  • Export to Text format for easy printing
+  • Export to Markdown for digital note-taking apps
+
+
+═══════════════════════════════════════════════════════════════════════
+
+🔧 TECHNICAL INFORMATION
+
+DATA STORAGE:
+  • All recipes, meal plans, and pantry items are stored in a local SQLite database
+  • Database location: data/meal_planner.db (in application folder)
+  • Your data is private and never leaves your computer
+
+REQUIREMENTS:
+  • Python 3.7 or higher
+  • reportlab library (for PDF export)
+  • SQLite (included with Python)
+
+BACKUP YOUR DATA:
+  • Copy the entire "data" folder to backup your recipes
+  • Export recipes to PDF for additional backup
+
+
+═══════════════════════════════════════════════════════════════════════
+
+❓ FREQUENTLY ASKED QUESTIONS
+
+Q: Why can't I import recipes from PDF files?
+A: PDF is designed for viewing, not for importing structured data. You can only export
+   to PDF. To add recipes, use the "➕ Add New Recipe" button.
+
+Q: Can I share my recipes with friends?
+A: Yes! Export your recipes to PDF and share the PDF file. Recipients can read the
+   recipes but will need to manually add them to their own app.
+
+Q: How do I backup my recipes?
+A: Copy the "data" folder from the application directory, or export all recipes to
+   PDF for a readable backup.
+
+Q: Can I use this app on multiple computers?
+A: The app doesn't sync automatically. You can copy the "data" folder to move your
+   recipes between computers.
+
+Q: Why isn't my grocery list showing all ingredients?
+A: Make sure you've generated a meal plan first. The grocery list is based on your
+   current meal plan.
+
+Q: How do I add recipes from websites?
+A: Currently, you need to manually copy and paste recipe information into the
+   "Add New Recipe" form. There's no automatic import feature.
+
+
+═══════════════════════════════════════════════════════════════════════
+
+📞 NEED HELP?
+
+If you encounter any issues or have questions:
+  • Review this Help & Info tab
+  • Check that all required libraries are installed
+  • Verify your database file exists in the data folder
+  • Make sure you have write permissions in the application folder
+
+
+═══════════════════════════════════════════════════════════════════════
+
+🎉 ENJOY YOUR MEAL PLANNING!
+
+This app is designed to make meal planning and grocery shopping easier. Start by
+exploring the 8 pre-loaded recipes, add your own favorites, and generate your first
+meal plan. Happy cooking! 👨‍🍳
+
+"""
+
+        content.insert(1.0, help_text)
+        content.config(state='disabled')  # Make it read-only
 
 
 def main():

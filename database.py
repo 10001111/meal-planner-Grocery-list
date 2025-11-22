@@ -38,6 +38,176 @@ def get_connection() -> sqlite3.Connection:
     return conn
 
 
+def load_default_recipes() -> None:
+    """Load default everyday recipes if database is empty."""
+    from models import Recipe, RecipeIngredient
+    from recipe_manager import add_recipe, get_all_recipes
+
+    # Check if there are already recipes
+    existing_recipes = get_all_recipes()
+    if existing_recipes:
+        return  # Don't add defaults if recipes already exist
+
+    default_recipes = [
+        # Breakfast Recipes
+        Recipe(
+            name="Scrambled Eggs with Toast",
+            meal_type="breakfast",
+            servings=2,
+            prep_time=5,
+            cook_time=10,
+            cuisine="American",
+            ingredients=[
+                RecipeIngredient(ingredient_name="eggs", quantity=4, unit="whole"),
+                RecipeIngredient(ingredient_name="butter", quantity=1, unit="tbsp"),
+                RecipeIngredient(ingredient_name="bread", quantity=4, unit="slices"),
+                RecipeIngredient(ingredient_name="milk", quantity=2, unit="tbsp"),
+                RecipeIngredient(ingredient_name="salt", quantity=0.25, unit="tsp"),
+                RecipeIngredient(ingredient_name="black pepper", quantity=0.125, unit="tsp"),
+            ],
+            instructions="1. Beat eggs with milk, salt, and pepper.\n2. Melt butter in pan over medium heat.\n3. Pour in eggs and gently stir until cooked.\n4. Toast bread and serve with eggs.",
+            dietary_tags=["vegetarian"]
+        ),
+        Recipe(
+            name="Oatmeal with Berries",
+            meal_type="breakfast",
+            servings=2,
+            prep_time=5,
+            cook_time=10,
+            cuisine="American",
+            ingredients=[
+                RecipeIngredient(ingredient_name="rolled oats", quantity=1, unit="cup"),
+                RecipeIngredient(ingredient_name="water", quantity=2, unit="cups"),
+                RecipeIngredient(ingredient_name="blueberries", quantity=0.5, unit="cup"),
+                RecipeIngredient(ingredient_name="strawberries", quantity=0.5, unit="cup", preparation="sliced"),
+                RecipeIngredient(ingredient_name="honey", quantity=2, unit="tbsp"),
+                RecipeIngredient(ingredient_name="cinnamon", quantity=0.5, unit="tsp"),
+            ],
+            instructions="1. Bring water to boil in a pot.\n2. Add oats and reduce heat to medium.\n3. Cook for 5-7 minutes, stirring occasionally.\n4. Remove from heat and stir in cinnamon.\n5. Top with berries and drizzle with honey.",
+            dietary_tags=["vegetarian", "vegan"]
+        ),
+        # Lunch Recipes
+        Recipe(
+            name="Grilled Cheese Sandwich",
+            meal_type="lunch",
+            servings=2,
+            prep_time=5,
+            cook_time=10,
+            cuisine="American",
+            ingredients=[
+                RecipeIngredient(ingredient_name="bread", quantity=4, unit="slices"),
+                RecipeIngredient(ingredient_name="cheddar cheese", quantity=4, unit="slices"),
+                RecipeIngredient(ingredient_name="butter", quantity=2, unit="tbsp"),
+            ],
+            instructions="1. Butter one side of each bread slice.\n2. Place cheese between bread slices, butter side out.\n3. Heat skillet over medium heat.\n4. Cook sandwich until golden brown on each side and cheese is melted, about 3-4 minutes per side.",
+            dietary_tags=["vegetarian"]
+        ),
+        Recipe(
+            name="Chicken Caesar Salad",
+            meal_type="lunch",
+            servings=2,
+            prep_time=15,
+            cook_time=15,
+            cuisine="American",
+            ingredients=[
+                RecipeIngredient(ingredient_name="chicken breast", quantity=1, unit="lb"),
+                RecipeIngredient(ingredient_name="romaine lettuce", quantity=1, unit="head", preparation="chopped"),
+                RecipeIngredient(ingredient_name="parmesan cheese", quantity=0.5, unit="cup", preparation="grated"),
+                RecipeIngredient(ingredient_name="Caesar dressing", quantity=0.5, unit="cup"),
+                RecipeIngredient(ingredient_name="croutons", quantity=1, unit="cup"),
+                RecipeIngredient(ingredient_name="olive oil", quantity=1, unit="tbsp"),
+            ],
+            instructions="1. Season chicken with salt and pepper.\n2. Heat olive oil in pan and cook chicken 6-7 minutes per side.\n3. Let chicken rest 5 minutes, then slice.\n4. Toss lettuce with dressing and parmesan.\n5. Top with sliced chicken and croutons.",
+            dietary_tags=[]
+        ),
+        # Dinner Recipes
+        Recipe(
+            name="Spaghetti with Marinara",
+            meal_type="dinner",
+            servings=4,
+            prep_time=10,
+            cook_time=25,
+            cuisine="Italian",
+            ingredients=[
+                RecipeIngredient(ingredient_name="spaghetti", quantity=1, unit="lb"),
+                RecipeIngredient(ingredient_name="crushed tomatoes", quantity=28, unit="oz"),
+                RecipeIngredient(ingredient_name="garlic", quantity=4, unit="cloves", preparation="minced"),
+                RecipeIngredient(ingredient_name="olive oil", quantity=3, unit="tbsp"),
+                RecipeIngredient(ingredient_name="basil", quantity=0.25, unit="cup", preparation="fresh, chopped"),
+                RecipeIngredient(ingredient_name="salt", quantity=1, unit="tsp"),
+                RecipeIngredient(ingredient_name="black pepper", quantity=0.5, unit="tsp"),
+            ],
+            instructions="1. Cook spaghetti according to package directions.\n2. Heat olive oil in large pan over medium heat.\n3. Add garlic and cook until fragrant, about 1 minute.\n4. Add crushed tomatoes, salt, pepper, and half the basil.\n5. Simmer for 15 minutes.\n6. Toss pasta with sauce and garnish with remaining basil.",
+            dietary_tags=["vegetarian", "vegan"]
+        ),
+        Recipe(
+            name="Baked Chicken with Vegetables",
+            meal_type="dinner",
+            servings=4,
+            prep_time=15,
+            cook_time=40,
+            cuisine="American",
+            ingredients=[
+                RecipeIngredient(ingredient_name="chicken thighs", quantity=2, unit="lbs"),
+                RecipeIngredient(ingredient_name="potatoes", quantity=1, unit="lb", preparation="cubed"),
+                RecipeIngredient(ingredient_name="carrots", quantity=3, unit="whole", preparation="sliced"),
+                RecipeIngredient(ingredient_name="onion", quantity=1, unit="whole", preparation="quartered"),
+                RecipeIngredient(ingredient_name="olive oil", quantity=3, unit="tbsp"),
+                RecipeIngredient(ingredient_name="garlic powder", quantity=1, unit="tsp"),
+                RecipeIngredient(ingredient_name="paprika", quantity=1, unit="tsp"),
+                RecipeIngredient(ingredient_name="salt", quantity=1, unit="tsp"),
+                RecipeIngredient(ingredient_name="black pepper", quantity=0.5, unit="tsp"),
+            ],
+            instructions="1. Preheat oven to 425°F (220°C).\n2. Arrange vegetables in large baking dish.\n3. Drizzle with 2 tbsp olive oil and season with salt and pepper.\n4. Place chicken on top of vegetables.\n5. Rub chicken with remaining oil and season with garlic powder, paprika, salt, and pepper.\n6. Bake for 35-40 minutes until chicken reaches 165°F internal temperature.",
+            dietary_tags=[]
+        ),
+        # Snack Recipes
+        Recipe(
+            name="Fruit Smoothie",
+            meal_type="snack",
+            servings=2,
+            prep_time=5,
+            cook_time=0,
+            cuisine="American",
+            ingredients=[
+                RecipeIngredient(ingredient_name="banana", quantity=1, unit="whole"),
+                RecipeIngredient(ingredient_name="strawberries", quantity=1, unit="cup"),
+                RecipeIngredient(ingredient_name="yogurt", quantity=1, unit="cup"),
+                RecipeIngredient(ingredient_name="milk", quantity=0.5, unit="cup"),
+                RecipeIngredient(ingredient_name="honey", quantity=1, unit="tbsp"),
+            ],
+            instructions="1. Add all ingredients to blender.\n2. Blend until smooth.\n3. Pour into glasses and serve immediately.",
+            dietary_tags=["vegetarian"]
+        ),
+        Recipe(
+            name="Hummus with Veggies",
+            meal_type="snack",
+            servings=4,
+            prep_time=10,
+            cook_time=0,
+            cuisine="Mediterranean",
+            ingredients=[
+                RecipeIngredient(ingredient_name="chickpeas", quantity=15, unit="oz", preparation="drained"),
+                RecipeIngredient(ingredient_name="tahini", quantity=0.25, unit="cup"),
+                RecipeIngredient(ingredient_name="lemon juice", quantity=3, unit="tbsp"),
+                RecipeIngredient(ingredient_name="garlic", quantity=2, unit="cloves"),
+                RecipeIngredient(ingredient_name="olive oil", quantity=2, unit="tbsp"),
+                RecipeIngredient(ingredient_name="carrots", quantity=2, unit="whole", preparation="cut into sticks"),
+                RecipeIngredient(ingredient_name="celery", quantity=3, unit="stalks", preparation="cut into sticks"),
+            ],
+            instructions="1. In food processor, combine chickpeas, tahini, lemon juice, garlic, and olive oil.\n2. Blend until smooth, adding water if needed.\n3. Transfer to serving bowl.\n4. Serve with carrot and celery sticks.",
+            dietary_tags=["vegetarian", "vegan"]
+        ),
+    ]
+
+    # Add each default recipe
+    for recipe in default_recipes:
+        try:
+            add_recipe(recipe)
+        except Exception as e:
+            print(f"Warning: Could not add default recipe '{recipe.name}': {e}")
+
+
 def initialize_database() -> None:
     """Create tables if they don't exist."""
     conn = get_connection()
@@ -142,6 +312,9 @@ def initialize_database() -> None:
 
     conn.commit()
     conn.close()
+
+    # Load default recipes if database is empty
+    load_default_recipes()
 
 
 def execute_query(query: str, params: tuple = ()) -> List[sqlite3.Row]:
