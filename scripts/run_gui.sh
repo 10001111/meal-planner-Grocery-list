@@ -1,3 +1,4 @@
 #!/bin/bash
 # Quick launcher for Meal Planner GUI on Unix-like systems
-python3 gui_app.py
+cd "$(dirname "$0")/.."
+python3 src/gui_app.py

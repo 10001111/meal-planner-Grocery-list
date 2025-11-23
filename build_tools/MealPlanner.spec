@@ -7,8 +7,8 @@ This creates a standalone Windows executable with all dependencies bundled.
 block_cipher = None
 
 a = Analysis(
-    ['gui_app.py'],
-    pathex=[],
+    ['../src/gui_app.py'],
+    pathex=['../src'],
     binaries=[],
     datas=[
         # Include any data files if needed

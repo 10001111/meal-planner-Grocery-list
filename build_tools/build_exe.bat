@@ -13,9 +13,12 @@ if exist "build" rmdir /s /q "build"
 if exist "dist" rmdir /s /q "dist"
 echo.
 
+REM Change to project root directory
+cd ..
+
 REM Build executable
 echo Building executable with PyInstaller...
-python -m PyInstaller MealPlanner.spec --clean
+python -m PyInstaller build_tools\MealPlanner.spec --clean
 echo.
 
 REM Check if build was successful
